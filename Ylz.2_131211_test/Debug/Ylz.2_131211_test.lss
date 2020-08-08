@@ -1,0 +1,757 @@
+
+Ylz.2_131211_test.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000312  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000004  00800060  00000312  00000386  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  0000038a  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000003bc  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000050  00000000  00000000  000003f8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   0000098d  00000000  00000000  00000448  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000005f6  00000000  00000000  00000dd5  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   0000050c  00000000  00000000  000013cb  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  000000bc  00000000  00000000  000018d8  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000003b8  00000000  00000000  00001994  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    000005a7  00000000  00000000  00001d4c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 000000a8  00000000  00000000  000022f3  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0e c0       	rjmp	.+28     	; 0x1e <__ctors_end>
+   2:	20 c0       	rjmp	.+64     	; 0x44 <__bad_interrupt>
+   4:	1f c0       	rjmp	.+62     	; 0x44 <__bad_interrupt>
+   6:	1e c0       	rjmp	.+60     	; 0x44 <__bad_interrupt>
+   8:	1d c0       	rjmp	.+58     	; 0x44 <__bad_interrupt>
+   a:	1c c0       	rjmp	.+56     	; 0x44 <__bad_interrupt>
+   c:	1b c0       	rjmp	.+54     	; 0x44 <__bad_interrupt>
+   e:	1a c0       	rjmp	.+52     	; 0x44 <__bad_interrupt>
+  10:	19 c0       	rjmp	.+50     	; 0x44 <__bad_interrupt>
+  12:	18 c0       	rjmp	.+48     	; 0x44 <__bad_interrupt>
+  14:	17 c0       	rjmp	.+46     	; 0x44 <__bad_interrupt>
+  16:	16 c0       	rjmp	.+44     	; 0x44 <__bad_interrupt>
+  18:	15 c0       	rjmp	.+42     	; 0x44 <__bad_interrupt>
+  1a:	14 c0       	rjmp	.+40     	; 0x44 <__bad_interrupt>
+  1c:	13 c0       	rjmp	.+38     	; 0x44 <__bad_interrupt>
+
+0000001e <__ctors_end>:
+  1e:	11 24       	eor	r1, r1
+  20:	1f be       	out	0x3f, r1	; 63
+  22:	cf e5       	ldi	r28, 0x5F	; 95
+  24:	d1 e0       	ldi	r29, 0x01	; 1
+  26:	de bf       	out	0x3e, r29	; 62
+  28:	cd bf       	out	0x3d, r28	; 61
+
+0000002a <__do_copy_data>:
+  2a:	10 e0       	ldi	r17, 0x00	; 0
+  2c:	a0 e6       	ldi	r26, 0x60	; 96
+  2e:	b0 e0       	ldi	r27, 0x00	; 0
+  30:	e2 e1       	ldi	r30, 0x12	; 18
+  32:	f3 e0       	ldi	r31, 0x03	; 3
+  34:	02 c0       	rjmp	.+4      	; 0x3a <__do_copy_data+0x10>
+  36:	05 90       	lpm	r0, Z+
+  38:	0d 92       	st	X+, r0
+  3a:	a4 36       	cpi	r26, 0x64	; 100
+  3c:	b1 07       	cpc	r27, r17
+  3e:	d9 f7       	brne	.-10     	; 0x36 <__do_copy_data+0xc>
+  40:	d2 d0       	rcall	.+420    	; 0x1e6 <main>
+  42:	65 c1       	rjmp	.+714    	; 0x30e <_exit>
+
+00000044 <__bad_interrupt>:
+  44:	dd cf       	rjmp	.-70     	; 0x0 <__vectors>
+
+00000046 <debug>:
+
+/*
+ * Laufzeitfehler! Schnelles Blinken der LED. Das ist definitiv noch nie vorgekommen!
+ */
+void debug(void)
+{
+  46:	8a e0       	ldi	r24, 0x0A	; 10
+    for(uint8_t i=0; i<10; i++)
+    {
+        PORTB |=(1<<3);
+  48:	c3 9a       	sbi	0x18, 3	; 24
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  4a:	2f e7       	ldi	r18, 0x7F	; 127
+  4c:	38 e3       	ldi	r19, 0x38	; 56
+  4e:	91 e0       	ldi	r25, 0x01	; 1
+  50:	21 50       	subi	r18, 0x01	; 1
+  52:	30 40       	sbci	r19, 0x00	; 0
+  54:	90 40       	sbci	r25, 0x00	; 0
+  56:	e1 f7       	brne	.-8      	; 0x50 <debug+0xa>
+  58:	00 c0       	rjmp	.+0      	; 0x5a <debug+0x14>
+  5a:	00 00       	nop
+        _delay_ms(50);
+        PORTB &= ~(1<<3);
+  5c:	c3 98       	cbi	0x18, 3	; 24
+  5e:	2f e7       	ldi	r18, 0x7F	; 127
+  60:	38 e3       	ldi	r19, 0x38	; 56
+  62:	91 e0       	ldi	r25, 0x01	; 1
+  64:	21 50       	subi	r18, 0x01	; 1
+  66:	30 40       	sbci	r19, 0x00	; 0
+  68:	90 40       	sbci	r25, 0x00	; 0
+  6a:	e1 f7       	brne	.-8      	; 0x64 <debug+0x1e>
+  6c:	00 c0       	rjmp	.+0      	; 0x6e <debug+0x28>
+  6e:	00 00       	nop
+  70:	81 50       	subi	r24, 0x01	; 1
+/*
+ * Laufzeitfehler! Schnelles Blinken der LED. Das ist definitiv noch nie vorgekommen!
+ */
+void debug(void)
+{
+    for(uint8_t i=0; i<10; i++)
+  72:	51 f7       	brne	.-44     	; 0x48 <debug+0x2>
+        PORTB |=(1<<3);
+        _delay_ms(50);
+        PORTB &= ~(1<<3);
+        _delay_ms(50);
+    }
+}
+  74:	08 95       	ret
+
+00000076 <get_analog_random>:
+
+/*
+ * Erzeugung Zufallswert mit Hilfe LSB-Rauschen von Analog-Digital Wandlungen 
+ */
+uint16_t get_analog_random()
+{
+  76:	20 e0       	ldi	r18, 0x00	; 0
+  78:	30 e0       	ldi	r19, 0x00	; 0
+    uint8_t zahl=0, zahl2;
+    uint16_t analog_random=0;
+  7a:	80 e0       	ldi	r24, 0x00	; 0
+  7c:	90 e0       	ldi	r25, 0x00	; 0
+    for (uint8_t stelle=0; stelle < 16u; stelle++)
+    {
+        ADCSRA |= (1<<ADSC);        //Start der AD-Wandlung
+  7e:	36 9a       	sbi	0x06, 6	; 6
+        while(ADCSRA & (1<<ADSC));  //Warten auf Ende der Wandlung, dauert 13 Takte
+  80:	36 99       	sbic	0x06, 6	; 6
+  82:	fe cf       	rjmp	.-4      	; 0x80 <get_analog_random+0xa>
+        zahl =  ADCL;               //niederwertiges Byte der AD-Wandlung
+  84:	64 b1       	in	r22, 0x04	; 4
+        zahl2 = ADCH;               //höherwert. Byte ADCH muss auch gelesen werden
+  86:	75 b1       	in	r23, 0x05	; 5
+        zahl = zahl & 1;            //niederwertigstes Bit maskieren
+        zahl = zahl << stelle;      //nach links schieben
+        analog_random = analog_random + zahl;  //Zufallszahl zusammenbauen
+  88:	46 2f       	mov	r20, r22
+  8a:	41 70       	andi	r20, 0x01	; 1
+  8c:	50 e0       	ldi	r21, 0x00	; 0
+  8e:	ba 01       	movw	r22, r20
+  90:	02 2e       	mov	r0, r18
+  92:	02 c0       	rjmp	.+4      	; 0x98 <get_analog_random+0x22>
+  94:	66 0f       	add	r22, r22
+  96:	77 1f       	adc	r23, r23
+  98:	0a 94       	dec	r0
+  9a:	e2 f7       	brpl	.-8      	; 0x94 <get_analog_random+0x1e>
+  9c:	86 0f       	add	r24, r22
+  9e:	91 1d       	adc	r25, r1
+  a0:	2f 5f       	subi	r18, 0xFF	; 255
+  a2:	3f 4f       	sbci	r19, 0xFF	; 255
+ */
+uint16_t get_analog_random()
+{
+    uint8_t zahl=0, zahl2;
+    uint16_t analog_random=0;
+    for (uint8_t stelle=0; stelle < 16u; stelle++)
+  a4:	20 31       	cpi	r18, 0x10	; 16
+  a6:	31 05       	cpc	r19, r1
+  a8:	51 f7       	brne	.-44     	; 0x7e <get_analog_random+0x8>
+        zahl = zahl & 1;            //niederwertigstes Bit maskieren
+        zahl = zahl << stelle;      //nach links schieben
+        analog_random = analog_random + zahl;  //Zufallszahl zusammenbauen
+    }
+    return analog_random;
+}
+  aa:	08 95       	ret
+
+000000ac <transmit_50us_1MHz>:
+ *
+ *
+ *          (created by AACircuit v1.28.6 beta 04/19/05 www.tech-chat.de)
+ */
+void transmit_50us_1MHz(uint16_t dauer)
+{
+  ac:	bc 01       	movw	r22, r24
+    for(uint16_t i=0; i<dauer; i++)
+  ae:	89 2b       	or	r24, r25
+  b0:	51 f4       	brne	.+20     	; 0xc6 <transmit_50us_1MHz+0x1a>
+  b2:	08 95       	ret
+    {
+        for(uint8_t j=0; j<100; j++)    //minimal werden 50 volle Trägerwellen erzeugt
+        {
+        PINB = 1<<PB3;                  //Trägererzeugung 1MHz (decrement + brne + Toggeln mit PINB = 4Takte?)
+  b4:	26 bb       	out	0x16, r18	; 22
+  b6:	91 50       	subi	r25, 0x01	; 1
+ */
+void transmit_50us_1MHz(uint16_t dauer)
+{
+    for(uint16_t i=0; i<dauer; i++)
+    {
+        for(uint8_t j=0; j<100; j++)    //minimal werden 50 volle Trägerwellen erzeugt
+  b8:	e9 f7       	brne	.-6      	; 0xb4 <transmit_50us_1MHz+0x8>
+ *
+ *          (created by AACircuit v1.28.6 beta 04/19/05 www.tech-chat.de)
+ */
+void transmit_50us_1MHz(uint16_t dauer)
+{
+    for(uint16_t i=0; i<dauer; i++)
+  ba:	4f 5f       	subi	r20, 0xFF	; 255
+  bc:	5f 4f       	sbci	r21, 0xFF	; 255
+  be:	64 17       	cp	r22, r20
+  c0:	75 07       	cpc	r23, r21
+  c2:	21 f4       	brne	.+8      	; 0xcc <transmit_50us_1MHz+0x20>
+  c4:	08 95       	ret
+  c6:	40 e0       	ldi	r20, 0x00	; 0
+  c8:	50 e0       	ldi	r21, 0x00	; 0
+    {
+        for(uint8_t j=0; j<100; j++)    //minimal werden 50 volle Trägerwellen erzeugt
+        {
+        PINB = 1<<PB3;                  //Trägererzeugung 1MHz (decrement + brne + Toggeln mit PINB = 4Takte?)
+  ca:	28 e0       	ldi	r18, 0x08	; 8
+ *
+ *
+ *          (created by AACircuit v1.28.6 beta 04/19/05 www.tech-chat.de)
+ */
+void transmit_50us_1MHz(uint16_t dauer)
+{
+  cc:	94 e6       	ldi	r25, 0x64	; 100
+  ce:	f2 cf       	rjmp	.-28     	; 0xb4 <transmit_50us_1MHz+0x8>
+
+000000d0 <pause_1ms>:
+    }
+}
+
+void pause_1ms(uint16_t dauer) 
+{ 
+    for (uint16_t i=0; i<dauer; i++)   //Pause ohne Träger
+  d0:	00 97       	sbiw	r24, 0x00	; 0
+  d2:	69 f0       	breq	.+26     	; 0xee <pause_1ms+0x1e>
+  d4:	20 e0       	ldi	r18, 0x00	; 0
+  d6:	30 e0       	ldi	r19, 0x00	; 0
+  d8:	ef ec       	ldi	r30, 0xCF	; 207
+  da:	f7 e0       	ldi	r31, 0x07	; 7
+  dc:	31 97       	sbiw	r30, 0x01	; 1
+  de:	f1 f7       	brne	.-4      	; 0xdc <pause_1ms+0xc>
+  e0:	00 c0       	rjmp	.+0      	; 0xe2 <pause_1ms+0x12>
+  e2:	00 00       	nop
+  e4:	2f 5f       	subi	r18, 0xFF	; 255
+  e6:	3f 4f       	sbci	r19, 0xFF	; 255
+  e8:	82 17       	cp	r24, r18
+  ea:	93 07       	cpc	r25, r19
+  ec:	a9 f7       	brne	.-22     	; 0xd8 <pause_1ms+0x8>
+  ee:	08 95       	ret
+
+000000f0 <pause_50us>:
+    _delay_ms(1);
+}
+
+void pause_50us(uint16_t dauer)
+{
+    for (uint16_t i=0; i<dauer; i++)   //50us*dauer Pause ohne Träger
+  f0:	00 97       	sbiw	r24, 0x00	; 0
+  f2:	59 f0       	breq	.+22     	; 0x10a <pause_50us+0x1a>
+  f4:	20 e0       	ldi	r18, 0x00	; 0
+  f6:	30 e0       	ldi	r19, 0x00	; 0
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  f8:	45 e8       	ldi	r20, 0x85	; 133
+  fa:	4a 95       	dec	r20
+  fc:	f1 f7       	brne	.-4      	; 0xfa <pause_50us+0xa>
+  fe:	00 00       	nop
+ 100:	2f 5f       	subi	r18, 0xFF	; 255
+ 102:	3f 4f       	sbci	r19, 0xFF	; 255
+ 104:	82 17       	cp	r24, r18
+ 106:	93 07       	cpc	r25, r19
+ 108:	b9 f7       	brne	.-18     	; 0xf8 <pause_50us+0x8>
+ 10a:	08 95       	ret
+
+0000010c <burst3>:
+ * Sinnvoll sind Periodendauern bis ca. 40ms, die noch als einzelnes Knacken ohne Echo wahrgenommen werden können.
+ * Step sollte also kleiner als 10 sein. Mit stretch kann die Anzahl der vollständigen Perioden je step erhöht werden. 
+ * Sinnvoll sind hier Werte bis 4. Die längste Periode wird nur einmal mit dem Senden der Trägerwelle durchlaufen
+ */
+void burst3(uint8_t steps, uint8_t stretch)
+{
+ 10c:	9f 92       	push	r9
+ 10e:	af 92       	push	r10
+ 110:	bf 92       	push	r11
+ 112:	cf 92       	push	r12
+ 114:	df 92       	push	r13
+ 116:	ef 92       	push	r14
+ 118:	ff 92       	push	r15
+ 11a:	0f 93       	push	r16
+ 11c:	1f 93       	push	r17
+ 11e:	cf 93       	push	r28
+ 120:	df 93       	push	r29
+ 122:	98 2e       	mov	r9, r24
+ 124:	d6 2f       	mov	r29, r22
+    if ((steps>15) || (stretch>4))       //zu große Variablen! Verlassen ohne Trägergenerierung
+ 126:	8f e0       	ldi	r24, 0x0F	; 15
+ 128:	89 15       	cp	r24, r9
+ 12a:	90 f0       	brcs	.+36     	; 0x150 <burst3+0x44>
+ 12c:	65 30       	cpi	r22, 0x05	; 5
+ 12e:	80 f4       	brcc	.+32     	; 0x150 <burst3+0x44>
+    uint8_t i=0;
+
+    /*
+     * sich verdoppelnde Periodendauer (steps=3, stretch=2):____-_-_--__--__----____----____
+     */
+    for (; i<steps; ++i)
+ 130:	99 20       	and	r9, r9
+ 132:	09 f4       	brne	.+2      	; 0x136 <burst3+0x2a>
+ 134:	49 c0       	rjmp	.+146    	; 0x1c8 <__stack+0x69>
+ 136:	cc 24       	eor	r12, r12
+ 138:	ca 94       	dec	r12
+ 13a:	c9 0c       	add	r12, r9
+ 13c:	d1 2c       	mov	r13, r1
+ 13e:	8f ef       	ldi	r24, 0xFF	; 255
+ 140:	c8 1a       	sub	r12, r24
+ 142:	d8 0a       	sbc	r13, r24
+ 144:	e1 2c       	mov	r14, r1
+ 146:	f1 2c       	mov	r15, r1
+    {
+        for (uint8_t j=0; j<stretch; j++)
+        {
+            transmit_50us_1MHz(1<<i);
+ 148:	aa 24       	eor	r10, r10
+ 14a:	a3 94       	inc	r10
+ 14c:	b1 2c       	mov	r11, r1
+ 14e:	0f c0       	rjmp	.+30     	; 0x16e <__stack+0xf>
+ */
+void burst3(uint8_t steps, uint8_t stretch)
+{
+    if ((steps>15) || (stretch>4))       //zu große Variablen! Verlassen ohne Trägergenerierung
+    {
+        debug();
+ 150:	7a df       	rcall	.-268    	; 0x46 <debug>
+        return;
+ 152:	3d c0       	rjmp	.+122    	; 0x1ce <__stack+0x6f>
+     */
+    for (; i<steps; ++i)
+    {
+        for (uint8_t j=0; j<stretch; j++)
+        {
+            transmit_50us_1MHz(1<<i);
+ 154:	c8 01       	movw	r24, r16
+ 156:	aa df       	rcall	.-172    	; 0xac <transmit_50us_1MHz>
+            pause_50us(1<<i);
+ 158:	c8 01       	movw	r24, r16
+ 15a:	ca df       	rcall	.-108    	; 0xf0 <pause_50us>
+    /*
+     * sich verdoppelnde Periodendauer (steps=3, stretch=2):____-_-_--__--__----____----____
+     */
+    for (; i<steps; ++i)
+    {
+        for (uint8_t j=0; j<stretch; j++)
+ 15c:	cf 5f       	subi	r28, 0xFF	; 255
+ 15e:	dc 13       	cpse	r29, r28
+ 160:	f9 cf       	rjmp	.-14     	; 0x154 <burst3+0x48>
+ 162:	8f ef       	ldi	r24, 0xFF	; 255
+ 164:	e8 1a       	sub	r14, r24
+ 166:	f8 0a       	sbc	r15, r24
+    uint8_t i=0;
+
+    /*
+     * sich verdoppelnde Periodendauer (steps=3, stretch=2):____-_-_--__--__----____----____
+     */
+    for (; i<steps; ++i)
+ 168:	ce 14       	cp	r12, r14
+ 16a:	df 04       	cpc	r13, r15
+ 16c:	59 f0       	breq	.+22     	; 0x184 <__stack+0x25>
+    {
+        for (uint8_t j=0; j<stretch; j++)
+ 16e:	dd 23       	and	r29, r29
+ 170:	c1 f3       	breq	.-16     	; 0x162 <__stack+0x3>
+        {
+            transmit_50us_1MHz(1<<i);
+ 172:	85 01       	movw	r16, r10
+ 174:	0e 2c       	mov	r0, r14
+ 176:	02 c0       	rjmp	.+4      	; 0x17c <__stack+0x1d>
+ 178:	00 0f       	add	r16, r16
+ 17a:	11 1f       	adc	r17, r17
+ 17c:	0a 94       	dec	r0
+ 17e:	e2 f7       	brpl	.-8      	; 0x178 <__stack+0x19>
+ 180:	c0 e0       	ldi	r28, 0x00	; 0
+ 182:	e8 cf       	rjmp	.-48     	; 0x154 <burst3+0x48>
+    }
+
+    /*
+     * Längste Periode       (steps=3, stretch=2): --------
+     */
+    transmit_50us_1MHz(1<<steps);
+ 184:	81 e0       	ldi	r24, 0x01	; 1
+ 186:	90 e0       	ldi	r25, 0x00	; 0
+ 188:	09 2c       	mov	r0, r9
+ 18a:	02 c0       	rjmp	.+4      	; 0x190 <__stack+0x31>
+ 18c:	88 0f       	add	r24, r24
+ 18e:	99 1f       	adc	r25, r25
+ 190:	0a 94       	dec	r0
+ 192:	e2 f7       	brpl	.-8      	; 0x18c <__stack+0x2d>
+ 194:	8b df       	rcall	.-234    	; 0xac <transmit_50us_1MHz>
+     */
+    for (; i>0; --i)
+    {
+        for (uint8_t j=0; j<stretch; j++)
+        {
+            pause_50us(1<<i);
+ 196:	ee 24       	eor	r14, r14
+ 198:	e3 94       	inc	r14
+ 19a:	f1 2c       	mov	r15, r1
+ 19c:	0a c0       	rjmp	.+20     	; 0x1b2 <__stack+0x53>
+ 19e:	c8 01       	movw	r24, r16
+ 1a0:	a7 df       	rcall	.-178    	; 0xf0 <pause_50us>
+            transmit_50us_1MHz(1<<i);
+ 1a2:	c8 01       	movw	r24, r16
+ 1a4:	83 df       	rcall	.-250    	; 0xac <transmit_50us_1MHz>
+    /*
+     * sich halbierende Periodendauer  (steps=3, stretch=2):____----____----__--__--_-_-_____
+     */
+    for (; i>0; --i)
+    {
+        for (uint8_t j=0; j<stretch; j++)
+ 1a6:	cf 5f       	subi	r28, 0xFF	; 255
+ 1a8:	dc 13       	cpse	r29, r28
+ 1aa:	f9 cf       	rjmp	.-14     	; 0x19e <__stack+0x3f>
+    transmit_50us_1MHz(1<<steps);
+
+    /*
+     * sich halbierende Periodendauer  (steps=3, stretch=2):____----____----__--__--_-_-_____
+     */
+    for (; i>0; --i)
+ 1ac:	9a 94       	dec	r9
+ 1ae:	99 20       	and	r9, r9
+ 1b0:	71 f0       	breq	.+28     	; 0x1ce <__stack+0x6f>
+    {
+        for (uint8_t j=0; j<stretch; j++)
+ 1b2:	dd 23       	and	r29, r29
+ 1b4:	d9 f3       	breq	.-10     	; 0x1ac <__stack+0x4d>
+        {
+            pause_50us(1<<i);
+ 1b6:	87 01       	movw	r16, r14
+ 1b8:	09 2c       	mov	r0, r9
+ 1ba:	02 c0       	rjmp	.+4      	; 0x1c0 <__stack+0x61>
+ 1bc:	00 0f       	add	r16, r16
+ 1be:	11 1f       	adc	r17, r17
+ 1c0:	0a 94       	dec	r0
+ 1c2:	e2 f7       	brpl	.-8      	; 0x1bc <__stack+0x5d>
+ 1c4:	c0 e0       	ldi	r28, 0x00	; 0
+ 1c6:	eb cf       	rjmp	.-42     	; 0x19e <__stack+0x3f>
+    }
+
+    /*
+     * Längste Periode       (steps=3, stretch=2): --------
+     */
+    transmit_50us_1MHz(1<<steps);
+ 1c8:	81 e0       	ldi	r24, 0x01	; 1
+ 1ca:	90 e0       	ldi	r25, 0x00	; 0
+ 1cc:	6f df       	rcall	.-290    	; 0xac <transmit_50us_1MHz>
+        {
+            pause_50us(1<<i);
+            transmit_50us_1MHz(1<<i);
+        }
+    }
+}
+ 1ce:	df 91       	pop	r29
+ 1d0:	cf 91       	pop	r28
+ 1d2:	1f 91       	pop	r17
+ 1d4:	0f 91       	pop	r16
+ 1d6:	ff 90       	pop	r15
+ 1d8:	ef 90       	pop	r14
+ 1da:	df 90       	pop	r13
+ 1dc:	cf 90       	pop	r12
+ 1de:	bf 90       	pop	r11
+ 1e0:	af 90       	pop	r10
+ 1e2:	9f 90       	pop	r9
+ 1e4:	08 95       	ret
+
+000001e6 <main>:
+ * Ylz.2 stellt wie viele Wissenschaftler heute sagen die bedeutendste Entdeckung des 21.Jh dar..........
+ */ 
+
+int main(void)
+{
+    DDRB |= (1<<3);                         //PB3 Output
+ 1e6:	bb 9a       	sbi	0x17, 3	; 23
+    ADCSRA |= (1<<ADEN);                    //enable ADC
+ 1e8:	37 9a       	sbi	0x06, 7	; 6
+    ADMUX |= (1<<MUX1);       //PB4 als Input für ADC Enable 10Bit (rechtsbündige Werte in ADCH und ADCL)
+ 1ea:	39 9a       	sbi	0x07, 1	; 7
+    // Voltage reference selection auf Vcc nicht erforderlich, da Prozessor nach Reset so initialisiert
+    ADCSRA |= (1<<ADPS1)|(1<<ADPS2);        //prescaler = 64 ADC-Takt = 125kHz (50kHz < Takt < 200kHz)
+ 1ec:	86 b1       	in	r24, 0x06	; 6
+ 1ee:	86 60       	ori	r24, 0x06	; 6
+ 1f0:	86 b9       	out	0x06, r24	; 6
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 1f2:	2f ef       	ldi	r18, 0xFF	; 255
+ 1f4:	81 ee       	ldi	r24, 0xE1	; 225
+ 1f6:	94 e0       	ldi	r25, 0x04	; 4
+ 1f8:	21 50       	subi	r18, 0x01	; 1
+ 1fa:	80 40       	sbci	r24, 0x00	; 0
+ 1fc:	90 40       	sbci	r25, 0x00	; 0
+ 1fe:	e1 f7       	brne	.-8      	; 0x1f8 <main+0x12>
+ 200:	00 c0       	rjmp	.+0      	; 0x202 <main+0x1c>
+ 202:	00 00       	nop
+        /*
+         * 16Bit Linear Feedback Shift Register Code (LFSR)
+         * Bildung einer Maximalfolge mit der vom AD-Wandler generierten Startfolge
+         */
+        uint16_t lfsr_in = get_analog_random();
+        if(lfsr_in==0) lfsr_in=1;
+ 204:	88 24       	eor	r8, r8
+ 206:	83 94       	inc	r8
+ 208:	91 2c       	mov	r9, r1
+        uint16_t lfsr_state=lfsr_in;
+        uint16_t lfsr_out=0;
+ 20a:	a1 2c       	mov	r10, r1
+ 20c:	b1 2c       	mov	r11, r1
+                while(ADCSRA & (1<<ADSC));  //Warten auf Ende der Wandlung, dauert 13 Takte
+                poti = ADCH;                //höherwertiges Byte ADCH
+                /*
+                 * Sounderzeugung und Trägerbildung
+                 */
+                burst3(poti>>4, (poti>>2)%5);
+ 20e:	0f 2e       	mov	r0, r31
+ 210:	f5 e0       	ldi	r31, 0x05	; 5
+ 212:	cf 2e       	mov	r12, r31
+ 214:	f0 2d       	mov	r31, r0
+        uint8_t n = 0;
+        /*
+         * 16Bit Linear Feedback Shift Register Code (LFSR)
+         * Bildung einer Maximalfolge mit der vom AD-Wandler generierten Startfolge
+         */
+        uint16_t lfsr_in = get_analog_random();
+ 216:	2f df       	rcall	.-418    	; 0x76 <get_analog_random>
+ 218:	8c 01       	movw	r16, r24
+        if(lfsr_in==0) lfsr_in=1;
+ 21a:	89 2b       	or	r24, r25
+ 21c:	11 f4       	brne	.+4      	; 0x222 <main+0x3c>
+ 21e:	08 2d       	mov	r16, r8
+ 220:	19 2d       	mov	r17, r9
+        uint16_t lfsr_state=lfsr_in;
+ 222:	e8 01       	movw	r28, r16
+        uint16_t lfsr_out=0;
+ 224:	ea 2c       	mov	r14, r10
+ 226:	fb 2c       	mov	r15, r11
+    
+    _delay_ms(200); // Bootverzögerung nach Reset
+	
+	while(1)
+    {        
+        uint8_t n = 0;
+ 228:	d1 2c       	mov	r13, r1
+ 22a:	20 e1       	ldi	r18, 0x10	; 16
+        uint16_t lfsr_out=0;
+        do
+        {
+            for (uint8_t i=0; i<16; i++)
+            {
+                lfsr_state=(lfsr_state >> 1)^(-(lfsr_state & 1) & 0xB400u); // nach E.Galois
+ 22c:	ce 01       	movw	r24, r28
+ 22e:	96 95       	lsr	r25
+ 230:	87 95       	ror	r24
+ 232:	c1 70       	andi	r28, 0x01	; 1
+ 234:	dd 27       	eor	r29, r29
+ 236:	d1 95       	neg	r29
+ 238:	c1 95       	neg	r28
+ 23a:	d1 09       	sbc	r29, r1
+ 23c:	cc 27       	eor	r28, r28
+ 23e:	d4 7b       	andi	r29, 0xB4	; 180
+ 240:	c8 27       	eor	r28, r24
+ 242:	d9 27       	eor	r29, r25
+                 * basiert auf seinen Erkenntnissen zur Lösung algebraischer Gleichungen mit mehreren Polynomen. 
+                 * Hierbei handelt es sich um ein in Software realisiertes 16Bit breites linear rückgekoppeltes 
+                 * Schieberegister (LFSR) mit intern realisierter XOR-Verknüpfung, die aufgrund von Galois 
+                 * Erkenntnissen in einer einzigen Programmzeile realisiert werden kann.
+                 */
+                lfsr_out<<=1;
+ 244:	ee 0c       	add	r14, r14
+ 246:	ff 1c       	adc	r15, r15
+                lfsr_out|=lfsr_state & 1;
+ 248:	ce 01       	movw	r24, r28
+ 24a:	81 70       	andi	r24, 0x01	; 1
+ 24c:	99 27       	eor	r25, r25
+ 24e:	e8 2a       	or	r14, r24
+ 250:	f9 2a       	or	r15, r25
+ 252:	21 50       	subi	r18, 0x01	; 1
+        if(lfsr_in==0) lfsr_in=1;
+        uint16_t lfsr_state=lfsr_in;
+        uint16_t lfsr_out=0;
+        do
+        {
+            for (uint8_t i=0; i<16; i++)
+ 254:	59 f7       	brne	.-42     	; 0x22c <main+0x46>
+                 */
+                lfsr_out<<=1;
+                lfsr_out|=lfsr_state & 1;
+            }
+
+            if (!(lfsr_out % teiler[n])) //zufallszahl ist durch teiler teilbar (%=0)
+ 256:	ed 2d       	mov	r30, r13
+ 258:	f0 e0       	ldi	r31, 0x00	; 0
+ 25a:	e0 5a       	subi	r30, 0xA0	; 160
+ 25c:	ff 4f       	sbci	r31, 0xFF	; 255
+ 25e:	60 81       	ld	r22, Z
+ 260:	70 e0       	ldi	r23, 0x00	; 0
+ 262:	c7 01       	movw	r24, r14
+ 264:	40 d0       	rcall	.+128    	; 0x2e6 <__udivmodhi4>
+ 266:	89 2b       	or	r24, r25
+ 268:	d1 f4       	brne	.+52     	; 0x29e <main+0xb8>
+            {
+                /*
+                 * Auslesen Poti (64 unterschiedliche Stellungen werden erkannt und verändern das Knacken)
+                 */
+                uint8_t poti=0;             
+                ADMUX |= 1<<ADLAR;          //enable 8Bit ADC. ADCH linksbündig gelesen (2LSB in ADCL verfallen)
+ 26a:	3d 9a       	sbi	0x07, 5	; 7
+                ADCSRA |= (1<<ADSC);        //Start der AD-Wandlung
+ 26c:	36 9a       	sbi	0x06, 6	; 6
+                while(ADCSRA & (1<<ADSC));  //Warten auf Ende der Wandlung, dauert 13 Takte
+ 26e:	36 99       	sbic	0x06, 6	; 6
+ 270:	fe cf       	rjmp	.-4      	; 0x26e <main+0x88>
+                poti = ADCH;                //höherwertiges Byte ADCH
+ 272:	25 b1       	in	r18, 0x05	; 5
+                /*
+                 * Sounderzeugung und Trägerbildung
+                 */
+                burst3(poti>>4, (poti>>2)%5);
+ 274:	82 2f       	mov	r24, r18
+ 276:	86 95       	lsr	r24
+ 278:	86 95       	lsr	r24
+ 27a:	6c 2d       	mov	r22, r12
+ 27c:	28 d0       	rcall	.+80     	; 0x2ce <__udivmodqi4>
+ 27e:	69 2f       	mov	r22, r25
+ 280:	82 2f       	mov	r24, r18
+ 282:	82 95       	swap	r24
+ 284:	8f 70       	andi	r24, 0x0F	; 15
+ 286:	42 df       	rcall	.-380    	; 0x10c <burst3>
+                ADMUX &= ~(1<<ADLAR);       //Enable 10Bit ADC. ADCH rechtsbündig gelesen (2MSB in ADCH zu lesen) 
+ 288:	3d 98       	cbi	0x07, 5	; 7
+                if(n<3) n++;                //simple Clusterbildung durch Verringern des teilers (%=0 wahrscheinlicher)
+ 28a:	22 e0       	ldi	r18, 0x02	; 2
+ 28c:	2d 15       	cp	r18, r13
+ 28e:	08 f0       	brcs	.+2      	; 0x292 <main+0xac>
+ 290:	d3 94       	inc	r13
+                if(n==3) n=1;
+ 292:	83 e0       	ldi	r24, 0x03	; 3
+ 294:	d8 12       	cpse	r13, r24
+ 296:	16 c0       	rjmp	.+44     	; 0x2c4 <main+0xde>
+ 298:	dd 24       	eor	r13, r13
+ 29a:	d3 94       	inc	r13
+ 29c:	13 c0       	rjmp	.+38     	; 0x2c4 <main+0xde>
+            }
+
+            else
+            {
+                pause_1ms(lfsr_out>>10);     //zufallszahl ist nicht durch teiler teilbar
+ 29e:	8f 2d       	mov	r24, r15
+ 2a0:	86 95       	lsr	r24
+ 2a2:	86 95       	lsr	r24
+ 2a4:	90 e0       	ldi	r25, 0x00	; 0
+ 2a6:	14 df       	rcall	.-472    	; 0xd0 <pause_1ms>
+                if(n>0) n--;
+ 2a8:	dd 20       	and	r13, r13
+ 2aa:	41 f0       	breq	.+16     	; 0x2bc <main+0xd6>
+ 2ac:	da 94       	dec	r13
+                if(n==0) n=3;
+ 2ae:	d1 10       	cpse	r13, r1
+ 2b0:	09 c0       	rjmp	.+18     	; 0x2c4 <main+0xde>
+ 2b2:	0f 2e       	mov	r0, r31
+ 2b4:	f3 e0       	ldi	r31, 0x03	; 3
+ 2b6:	df 2e       	mov	r13, r31
+ 2b8:	f0 2d       	mov	r31, r0
+ 2ba:	04 c0       	rjmp	.+8      	; 0x2c4 <main+0xde>
+ 2bc:	0f 2e       	mov	r0, r31
+ 2be:	f3 e0       	ldi	r31, 0x03	; 3
+ 2c0:	df 2e       	mov	r13, r31
+ 2c2:	f0 2d       	mov	r31, r0
+            }                   
+        /*
+         * Verlasse do while Schleife zur Neubildung eines Startwertes, wenn sich die Maximalfolge wiederholt
+         */
+        } while (lfsr_state != lfsr_in);      
+ 2c4:	0c 17       	cp	r16, r28
+ 2c6:	1d 07       	cpc	r17, r29
+ 2c8:	09 f0       	breq	.+2      	; 0x2cc <main+0xe6>
+ 2ca:	af cf       	rjmp	.-162    	; 0x22a <main+0x44>
+ 2cc:	a4 cf       	rjmp	.-184    	; 0x216 <main+0x30>
+
+000002ce <__udivmodqi4>:
+ 2ce:	99 1b       	sub	r25, r25
+ 2d0:	79 e0       	ldi	r23, 0x09	; 9
+ 2d2:	04 c0       	rjmp	.+8      	; 0x2dc <__udivmodqi4_ep>
+
+000002d4 <__udivmodqi4_loop>:
+ 2d4:	99 1f       	adc	r25, r25
+ 2d6:	96 17       	cp	r25, r22
+ 2d8:	08 f0       	brcs	.+2      	; 0x2dc <__udivmodqi4_ep>
+ 2da:	96 1b       	sub	r25, r22
+
+000002dc <__udivmodqi4_ep>:
+ 2dc:	88 1f       	adc	r24, r24
+ 2de:	7a 95       	dec	r23
+ 2e0:	c9 f7       	brne	.-14     	; 0x2d4 <__udivmodqi4_loop>
+ 2e2:	80 95       	com	r24
+ 2e4:	08 95       	ret
+
+000002e6 <__udivmodhi4>:
+ 2e6:	aa 1b       	sub	r26, r26
+ 2e8:	bb 1b       	sub	r27, r27
+ 2ea:	51 e1       	ldi	r21, 0x11	; 17
+ 2ec:	07 c0       	rjmp	.+14     	; 0x2fc <__udivmodhi4_ep>
+
+000002ee <__udivmodhi4_loop>:
+ 2ee:	aa 1f       	adc	r26, r26
+ 2f0:	bb 1f       	adc	r27, r27
+ 2f2:	a6 17       	cp	r26, r22
+ 2f4:	b7 07       	cpc	r27, r23
+ 2f6:	10 f0       	brcs	.+4      	; 0x2fc <__udivmodhi4_ep>
+ 2f8:	a6 1b       	sub	r26, r22
+ 2fa:	b7 0b       	sbc	r27, r23
+
+000002fc <__udivmodhi4_ep>:
+ 2fc:	88 1f       	adc	r24, r24
+ 2fe:	99 1f       	adc	r25, r25
+ 300:	5a 95       	dec	r21
+ 302:	a9 f7       	brne	.-22     	; 0x2ee <__udivmodhi4_loop>
+ 304:	80 95       	com	r24
+ 306:	90 95       	com	r25
+ 308:	bc 01       	movw	r22, r24
+ 30a:	cd 01       	movw	r24, r26
+ 30c:	08 95       	ret
+
+0000030e <_exit>:
+ 30e:	f8 94       	cli
+
+00000310 <__stop_program>:
+ 310:	ff cf       	rjmp	.-2      	; 0x310 <__stop_program>
